@@ -39,11 +39,79 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-  const express = require('express');
-  const bodyParser = require('body-parser');
-  
-  const app = express();
-  
-  app.use(bodyParser.json());
-  
-  module.exports = app;
+
+// const todos = [
+//   {
+//     id: 1,
+//     title: "100xdevs",
+//     description: "Attend lectures of 0-100 cohort. Week 3 will start next week.",
+//   },
+//   {
+//     id: 2,
+//     title: "Login",
+//     description: "Login at 10 am in kreditly to do office work.",
+//   }
+// ]
+
+
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+app.use(bodyParser.json());
+
+const todos = [];
+
+app.get('/todos', (req, res) => {
+  res.json(todos);
+})
+
+app.get('/todos/:id', (req, res) => {
+  const id = req.params.id;
+  // console.log(typeof id);
+  const foundTodo = todos.find(todo => todo.id === parseInt(id));
+  if (!foundTodo) res.status(404).send();
+  else res.json(foundTodo);
+})
+
+app.post('/todos', (req, res) => {
+  const todo = {
+    id: Math.floor(Math.random() * 1000000),
+    title: req.body.title,
+    description: req.body.description,
+    completed: req.body.completed,
+  }
+  todos.push(todo);
+  res.status(201).json(todo);
+})
+
+app.put('/todos/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const updatedTodoIndex = todos.findIndex(todo => todo.id === id);
+  if(updatedTodoIndex === -1) res.status(404).send();
+  else{
+    todos[updatedTodoIndex].title = req.body.title,
+    todos[updatedTodoIndex].description = req.body.description,
+    todos[updatedTodoIndex].completed = req.body.completed,
+
+    res.json(todos[updatedTodoIndex]);
+  }
+})
+
+app.delete('/todos/:id', (req, res)=>{
+  const id = parseInt(req.params.id);
+  const deletedTodoIndex = todos.findIndex(todo => todo.id === id);
+  if(deletedTodoIndex === -1) res.status(404).send();
+  else{
+    todos.splice(deletedTodoIndex, 1);
+    res.status(200).send();
+  }
+})
+
+// const PORT = 3000;
+// app.listen(PORT, () => {
+//   console.log(`Server listening on port ${PORT}`);
+// })
+
+module.exports = app;
