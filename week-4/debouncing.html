@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let timeout;
+        const debouncingDiv = ()=>{
+            clearTimeout(timeout); // clear old time
+            timeout = setTimeout(performCalc, 1000);  // start new time
+        }
+        const performCalc = () => {
+            const a = document.getElementById('firstInput').value;
+            const b = document.getElementById('secondInput').value;
+            const res = document.getElementById('resDiv');
+            res.innerHTML = parseInt(a) + parseInt(b);
+        }
+    </script>
+</head>
+
+<body>
+    <input oninput="debouncingDiv()" type="text" name="" id="firstInput"> <br>
+    <input oninput="debouncingDiv()" type="text" name="" id="secondInput"> <br>
+    <!-- <button onclick="performCalc()">Calculate</button> -->
+    <div id="resDiv"></div>
+</body>
+
+</html>

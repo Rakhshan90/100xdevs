@@ -23,4 +23,14 @@ app.get('/errorCount', function(req, res) {
   res.status(200).json({ errorCount });
 });
 
+app.use((err, req, res, next)=>{
+  errorCount++;
+  res.status(404).json({msg: `Exception: ${errorCount}`});
+});
+
+// const PORT = 3000;
+// app.listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`);
+// })
+
 module.exports = app;

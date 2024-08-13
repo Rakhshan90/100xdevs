@@ -16,6 +16,23 @@ setInterval(() => {
     numberOfRequestsForUser = {};
 }, 1000)
 
+app.use((req, res, next)=>{
+  const userId = req.headers['user-id'];
+  if(!numberOfRequestsForUser[userId]){
+    numberOfRequestsForUser[userId] = 1;
+    next();
+  }
+  else{
+    if(numberOfRequestsForUser[userId] > 5){
+      res.status(404).json({msg: "You have exceeded number of requests per second."});
+    }
+    else{
+      numberOfRequestsForUser[userId]++;
+      next();
+    }
+  }
+});
+
 app.get('/user', function(req, res) {
   res.status(200).json({ name: 'john' });
 });
@@ -23,5 +40,10 @@ app.get('/user', function(req, res) {
 app.post('/user', function(req, res) {
   res.status(200).json({ msg: 'created dummy user' });
 });
+
+// const PORT = 3000;
+// app.listen(PORT, ()=>{
+//   console.log(`server listening on PORT ${PORT}`);
+// })
 
 module.exports = app;

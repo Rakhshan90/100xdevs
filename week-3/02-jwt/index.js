@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const jwtPassword = 'secret';
+const zod = require('zod');
 
 
 /**
@@ -13,9 +14,24 @@ const jwtPassword = 'secret';
  *                        Returns null if the username is not a valid email or
  *                        the password does not meet the length requirement.
  */
+
+const schema = zod.object({
+    username: zod.string().email(),
+    password: zod.string().min(6)
+});
+
 function signJwt(username, password) {
-    // Your code here
+    let token;
+    const response = schema.safeParse({username, password});
+    if(!response.success) return null;
+    else{
+        token = jwt.sign({username, password}, jwtPassword);
+        return token;
+    }
 }
+
+// const result = signJwt("abc@gmail.com", '123456');
+// console.log(result);
 
 /**
  * Verifies a JWT using a secret key.
@@ -26,8 +42,16 @@ function signJwt(username, password) {
  *                    using the secret key.
  */
 function verifyJwt(token) {
-    // Your code here
+    try {
+        const decoded = jwt.verify(token, jwtPassword);
+        if(decoded) return true;
+    } catch (error) {
+        return false;
+    }
 }
+
+// const result = verifyJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFiY0BnbWFpbC5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImlhdCI6MTcyMDkzOTI0Mn0.q3onkkVk-iXr44q7jS1ADe7cdnvINcCHMhnHVwuvz00");
+// console.log(result);
 
 /**
  * Decodes a JWT to reveal its payload without verifying its authenticity.
@@ -37,9 +61,13 @@ function verifyJwt(token) {
  *                         Returns false if the token is not a valid JWT format.
  */
 function decodeJwt(token) {
-    // Your code here
+    const decoded = jwt.decode(token);
+    if(!decoded) return false;
+    else return true;
 }
 
+// const result = decodeJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFiY0BnbWFpbC5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImlhdCI6MTcyMDkzOTI0Mn0.q3onkkVk-iXr44q7jS1ADe7cdnvINcCHMhnHVwuvz00");
+// console.log(result);
 
 module.exports = {
   signJwt,
