@@ -179,11 +179,32 @@ const num = identity<number>(12);
 const str = identity<string>("hello");
 str.toUpperCase();
 
-*/
-function getFirstElement(arr) {
-    return arr[0];
+
+function getFirstElement<T>(arr: T[]){
+   return arr[0];
+}
+
+interface User{
+   name: string;
 }
 // const output1 = getFirstElement(["Rakhshan", "Ahmad", 1, 2, 3, 4]);
 // const output2 = getFirstElement<string>(["Rakhshan", "Ahmad"]);
-const output3 = getFirstElement([{ name: "Rakhshan" }]);
+const output3 = getFirstElement<User>([{name: "Rakhshan"}]);
 console.log(output3.name);
+
+import express from "express";
+const app = express();
+*/
+function sumOfAge(user1, user2) {
+    return user1.age + user2.age;
+}
+;
+// Example usage
+const result = sumOfAge({
+    name: "harkirat",
+    age: 20
+}, {
+    name: "raman",
+    age: 21
+});
+console.log(result); // Output: 9

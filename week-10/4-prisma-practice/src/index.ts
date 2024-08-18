@@ -20,7 +20,7 @@ async function insertUser(username: string, password: string, firstName: string,
   console.log(res);
 }
 
-// insertUser("elon@gmail.com", "123456", "elon", "mask");
+// insertUser("test@gmail.com", "123456", "test", "user");
 
 
 // update user data of user table
@@ -62,4 +62,27 @@ async function getUser(username: string){
     console.log(res);
 }
 
-getUser("rakhshan@gmail.com");
+// getUser("rakhshan@gmail.com");
+
+async function getUsers(){
+    const res = await prisma.user.findMany({
+        select: {
+            username: true,
+            firstName: true,
+            lastName: true,
+        }
+    })
+
+    console.log(res);
+}
+
+getUsers();
+
+async function deleteUser(username: string){
+    const res = await prisma.user.delete({
+        where: {username},
+    })
+    console.log(res);
+}
+
+// deleteUser("test@gmail.com");

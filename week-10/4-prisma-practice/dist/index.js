@@ -58,4 +58,26 @@ function getUser(username) {
         console.log(res);
     });
 }
-getUser("rakhshan@gmail.com");
+// getUser("rakhshan@gmail.com");
+function getUsers() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const res = yield prisma.user.findMany({
+            select: {
+                username: true,
+                firstName: true,
+                lastName: true,
+            }
+        });
+        console.log(res);
+    });
+}
+getUsers();
+function deleteUser(username) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const res = yield prisma.user.delete({
+            where: { username },
+        });
+        console.log(res);
+    });
+}
+// deleteUser("test@gmail.com");
