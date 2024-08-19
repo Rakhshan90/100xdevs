@@ -111,4 +111,4 @@ const getTodosAndUserDetails = (userId) => __awaiter(void 0, void 0, void 0, fun
     });
     console.log(res);
 });
-getTodosAndUserDetails(2);
+getTodosAndUserDetails(1);

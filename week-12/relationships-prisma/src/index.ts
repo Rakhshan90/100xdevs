@@ -124,4 +124,4 @@ const getTodosAndUserDetails = async (userId: number)=>{
     console.log(res);
 }
 
-// getTodosAndUserDetails(1);
+getTodosAndUserDetails(1);
