@@ -1,0 +1,18 @@
+{
+  "name": "trpc-intro",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -b",
+    "client-run": "node dist/client/index.js",
+    "server-run": "node dist/server/index.js",
+    "client-dev": "yarn run build && yarn run client-run",
+    "server-dev": "yarn run build && yarn run server-run"
+  },
+  "dependencies": {
+    "@trpc/client": "^11.0.0-rc.502",
+    "@trpc/server": "^11.0.0-rc.502",
+    "zod": "^3.23.8"
+  }
+}

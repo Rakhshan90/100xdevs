@@ -1,0 +1,9 @@
+{
+  "name": "@repo/common",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "license": "MIT",
+  "exports": {
+    "./config" : "./dist/index.js"
+  }
+}
