@@ -21,6 +21,6 @@ function sumOfN(n){
     }
   }
   
-  syncSleep();
+  // syncSleep();
   
   console.log("hello world");
