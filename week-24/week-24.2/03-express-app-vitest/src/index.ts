@@ -30,6 +30,8 @@ app.post("/sum", async (req: any, res: any) => {
         }
     })
 
+    // console.log(response);
+
     res.json({
         id: response.id,
         answer
