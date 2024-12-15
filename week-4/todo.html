@@ -11,17 +11,17 @@
     <div id="container">
         <input type="text" name="title" id="title"> <br></br>
         <input type="text" name="description" id="description"> <br></br>
-        <!-- <button onclick="addTodo()">Add todo</button> -->
+        <button onclick="addTodo()">Add todo</button>
     </div>
 
     <div id="grandParent"></div>
 
     <script>
-        // let globalId = 0;
-        // function markAsDone(id){
-        //     const parent = document.getElementById(id);
-        //     parent.children[2].innerHTML = 'Done';
-        // }
+        let globalId = 0;
+        function markAsDone(id){
+            const parent = document.getElementById(id);
+            parent.children[2].innerHTML = 'Done';
+        }
         function createTodo(title, description, id){
             const child1 = document.createElement('div');
             const child2 = document.createElement('div');
@@ -29,35 +29,35 @@
             child1.innerHTML = title;
             child2.innerHTML = description;
             child3.innerHTML = "Mark as done";
-            // child3.setAttribute('onClick', `markAsDone(${id})`);
+            child3.setAttribute('onClick', `markAsDone(${id})`);
             const parent = document.createElement('div');
-            // parent.setAttribute('id', id);
+            parent.setAttribute('id', id);
             parent.appendChild(child1);
             parent.appendChild(child2);
             parent.appendChild(child3);
             return parent;
         }
-        // function addTodo() {
-        //     const title = document.getElementById("title").value;
-        //     const description = document.getElementById("description").value;
-        //     const grandParent = document.getElementById('grandParent');
-        //     grandParent.appendChild(createTodo(title, description, globalId++));
-        // }
-
-        function updateDomAccToState(state){
-            const todosArr = state.todos;
+        function addTodo() {
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
             const grandParent = document.getElementById('grandParent');
-            grandParent.innerHTML = "";
-            for(let i=0; i<todosArr.length; i++){
-                const todo = createTodo(state.title, state.description, state.id);
-                grandParent.appendChild(todo);
-            }
+            grandParent.appendChild(createTodo(title, description, globalId++));
         }
-        window.setInterval(async function(){
-            const res = await fetch('https://sum-server.100xdevs.com/todos');
-            const json = await res.json();
-            updateDomAccToState(json);
-        }, 5000)
+
+        // function updateDomAccToState(state){
+        //     const todosArr = state.todos;
+        //     const grandParent = document.getElementById('grandParent');
+        //     grandParent.innerHTML = "";
+        //     for(let i=0; i<todosArr.length; i++){
+        //         const todo = createTodo(state.title, state.description, state.id);
+        //         grandParent.appendChild(todo);
+        //     }
+        // }
+        // window.setInterval(async function(){
+        //     const res = await fetch('https://sum-server.100xdevs.com/todos');
+        //     const json = await res.json();
+        //     updateDomAccToState(json);
+        // }, 5000)
     </script>
 </body>
 
